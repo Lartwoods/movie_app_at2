@@ -1,0 +1,101 @@
+html {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  font:
+    14px 'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif;
+  line-height: 1.4em;
+  color: #111111;
+  background-color: #f7f7f7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 300;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button::-moz-focus-inner {
+  border: none;
+}
+
+.App {
+  width: 70%;
+  height: 100%;
+  margin: auto;
+  height: fit-content;
+  background-color: white;
+}
+
+.custom-space {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.custom-space .ant-alert {
+  max-width: 400px;
+  padding: 20px;
+  background-color: transparent;
+  color: #333;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-space .ant-alert:before {
+  content: '';
+  position: absolute;
+  top: -160px;
+  left: 5%;
+  width: 150px;
+  height: 150px;
+  background-image: url('../src/images/sad1.jpg');
+  background-size: cover;
+}
+
+.ant-space-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-pagination {
+  box-sizing: border-box;
+  width: fit-content;
+  margin: 2% auto;
+  padding: 0 0 20px 0;
+}
+@media only screen and (max-width: 590px) {
+  .custom-space .ant-alert {
+    max-width: 90%;
+    font-size: 16px;
+  }
+  .App {
+    width: 100%;
+  }
+}

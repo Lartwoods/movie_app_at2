@@ -1,0 +1,161 @@
+.card-wrapper {
+  width: 30vw;
+  height: auto;
+  margin: 1%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.card {
+  position: relative;
+  display: flex;
+  /* min-width: 350px; */
+  width: 100%;
+  height: 100%;
+  /* box-sizing: border-box; */
+}
+
+.card-image {
+  width: 183px;
+  height: auto;
+}
+
+.card-details {
+  width: 52%;
+  height: 85%;
+  padding: 0 20px 5px 20px;
+  overflow-y: hidden;
+}
+
+.card-title {
+  width: 80%;
+  font-size: 1em;
+  margin: 7px 0 5px 0;
+}
+
+.card-date {
+  font: 'Inter';
+  font-size: 0.9em;
+  color: #827e7e;
+  margin: 5px 0;
+}
+
+.card-genre {
+  font-size: 0.9em;
+  color: #666;
+  margin: 5px 0;
+}
+
+.card-overview,
+.card-overview-mobile {
+  font: 'Inter UI';
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin: 15px 0;
+}
+.rating-circle {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background: transparent;
+  border: 2px solid #e9d100;
+}
+.card-overview-mobile {
+  display: none;
+}
+.rate {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.95rem;
+}
+.genre-item{
+  background-color: #fafafa;
+  border: 1px solid #d9d9d9;
+  font-size: 9px;
+  margin: 0;
+  margin-right: 5px;
+  padding: 0px 4px;
+  display: inline-block;
+}
+@media screen and (max-width: 1200px) {
+  .card-overview {
+    margin: 5px 0;
+  }
+  .rating-circle {
+    width: 20px;
+    height: 20px;
+  }
+  .card-image {
+    height: 170px;
+    width: auto;
+  }
+}
+@media screen and (max-width: 1500px) {
+}
+
+@media screen and (max-width: 950px) {
+  .card-wrapper {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .card {
+    height: 245px;
+  }
+  .card-overview {
+    position: absolute;
+    width: 65%;
+    margin-top: 2%;
+  }
+  .rate {
+    font-size: 1.2rem;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+  }
+}
+@media screen and (max-width: 590px) {
+  .card-wrapper {
+    display: block;
+    justify-content: center;
+    width: 100%;
+    height: 245px;
+  }
+  .card {
+    padding: 5px;
+  }
+  .card-details {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .card-image {
+    width: auto;
+    height: 50%;
+  }
+  .card-overview {
+    position: absolute;
+    left: 0;
+    width: 300px;
+    /* right: 5px; */
+    top: 50%;
+    padding: 5px;
+    font-size: 1em;
+  }
+  .card-overview-mobile,
+  .card-wrapper {
+    display: block;
+  }
+  .rate {
+    bottom: 20px;
+    right: 25px;
+  }
+}
