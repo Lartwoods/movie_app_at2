@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import './CardMovie.css';
+import MovieService from '../../services/MovieService.jsx';
 import { Rate } from 'antd';
 
 function shortenText(text, maxLength) {
@@ -16,7 +16,13 @@ function shortenText(text, maxLength) {
   }
 }
 
-export default function CardMovie({ movie, genres, rateMovie, setMovies }) {
+export default function CardMovie({
+  movie,
+  genres,
+  // rateMovie,
+  setMovies,
+  setRatedMovies,
+}) {
   const { poster_path, original_title, release_date, genre_ids, overview } =
     movie;
 
@@ -26,7 +32,7 @@ export default function CardMovie({ movie, genres, rateMovie, setMovies }) {
   const genreNames = movie.genre_ids.map((id) => {
     const genre = genres.find((genre) => genre.id === id);
     return (
-      <span className="genre-item" key={genre.id}>
+      <span className="genre-item" key={genre?.id || 0}>
         {genre ? genre.name : ''}
       </span>
     );
@@ -34,43 +40,69 @@ export default function CardMovie({ movie, genres, rateMovie, setMovies }) {
   const voteAverage = movie.vote_average.toFixed(1);
   const getColor = (voteAverage) => {
     if (voteAverage >= 7) {
-      return '#66E900'; 
+      return '#66E900';
     } else if (voteAverage >= 5) {
-      return '#E9D100'; 
+      return '#E9D100';
     } else if (voteAverage >= 3) {
-      return '#E97E00'; 
+      return '#E97E00';
     } else {
-      return '#E90000'; 
+      return '#E90000';
     }
   };
   const ratingColor = getColor(voteAverage);
   const [rating, setRating] = useState(0);
 
   const handleRateChange = (value) => {
+    // setMovies((prevMovies) => {
+    //   return prevMovies.map((movie) => {
+    //     // if (!movie || !movie.id) {
+    //     //   return null;
+    //     // }
+    //     if (movie.id) {
+    //       setRating({ ...movie, me_average: value });
+    //       return { ...movie, me_average: value };
+    //     }
+    //     return movie;
+    //   });
+    // });
+    // setRatedMovies((prevRatedMovies) => [...prevRatedMovies, movie]);
+    // // setMovies((prevMovies) => {
+    // //   return prevMovies.map((movie) => {
+    // //     if (!movie || typeof movie.id === 'undefined') {
+    // //       return null;
+    // //     }
+    // //     if (movie.id) {
+    // //       setRating({ ...movie, me_average: value })
+    // //       return { ...movie, me_average: value };
+    // //     }
+    // //     return movie;
+    // //   });
+    // // });
+
+    // // rateMovie(movie.id, value);
+
+    // setRating(value);
+    localStorage.setItem(movie.id, value.toString());
 
     setMovies((prevMovies) => {
-      return prevMovies.map((movie) => {
-        if (!movie || !movie.id) {
-    return null; 
-  }
-        if (movie.id === movie.id) {
-          setRating({ ...movie, me_average: value })
-          return { ...movie, me_average: value };
+      return prevMovies.map((prevMovie) => {
+        if (prevMovie.id === movie.id) {
+          return { ...prevMovie, me_average: value };
         }
-        return movie;
-      })
-    })
-
-    
-    // rateMovie(movie.id, value);
-    
+        return prevMovie;
+      });
+    });
+    setRatedMovies((prevRatedMovies) => [...prevRatedMovies, movie]);
     setRating(value);
   };
 
   return (
     <div className="card-wrapper">
       <div className="card">
-        <div className="rating-circle" style={{ border: `2px solid ${ratingColor}` }}>
+        <div
+          className="rating-circle"
+          style={{ border: `2px solid ${ratingColor}` }}
+        >
           <div className="rating-value">{voteAverage}</div>
         </div>
         <img
@@ -83,8 +115,14 @@ export default function CardMovie({ movie, genres, rateMovie, setMovies }) {
           <p className="card-date">{formattedDate}</p>
           <p className="card-genre">{genreNames}</p>
           <p className="card-overview">{shortText}</p>
-          <Rate allowHalf className="rate" count={10} defaultValue={0}   value={rating} 
-          onChange={handleRateChange}  />
+          <Rate
+            allowHalf
+            className="rate"
+            count={10}
+            defaultValue={0}
+            value={rating}
+            onChange={handleRateChange}
+          />
         </div>
       </div>
     </div>

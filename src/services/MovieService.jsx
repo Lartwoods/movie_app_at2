@@ -51,7 +51,7 @@ export default class MovieService {
     }
   }
 
-  async getQuestSession() {
+  async getGuestSession() {
     const data = await fetch(
       `https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${this.apiKey}`
     );
@@ -93,11 +93,11 @@ export default class MovieService {
   setSessionToken(token) {
     localStorage.setItem('token', token);
   }
-  // setMyRating (id, value) {
-  //   localStorage.setItem(id, value);
-  // };
+  setMyRating(id, value) {
+    localStorage.setItem(id, value);
+  }
 
-  // getMyRating (id)  {
-  //   return +localStorage.getItem(id);
-  // };
+  getMyRating(id) {
+    return +localStorage.getItem(id);
+  }
 }

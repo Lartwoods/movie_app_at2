@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { Flex, Spin, Alert } from 'antd';
 import CardMovie from '../CardMovie/CardMovie.jsx';
@@ -12,11 +11,11 @@ export default function MoviesList({
   rateMovie,
   ratedMovies,
   genres,
-  setMovies
+  setMovies,
+  setRatedMovies,
+  activeTabKey
 }) {
-  
   const inputRef = useRef(null);
-  
 
   useEffect(() => {
     if (inputRef.current) {
@@ -25,61 +24,15 @@ export default function MoviesList({
   });
 
   return (
-    // <>
-    //   {loading ? (
-    //     <Flex justify="center" align="center" style={{ minHeight: '100vh' }}>
-    //       <Spin size="large" />
-    //     </Flex>
-    //   ) : (
-    //     <>
-    //       <div className="search-bar">
-    //         <input
-    //           className="search-bar-input"
-    //           ref={inputRef}
-    //           type="text"
-    //           placeholder="Type to search..."
-    //           value={searchTerm}
-    //           onChange={onInputChange}
-    //         />
-    //       </div>
-    //       <div className="movies-list">
-    //         {/* {currentFilteredPosts.length > 0 ? (
-    //           currentFilteredPosts.map((movie) => (
-    //             <CardMovie key={movie.id} movie={movie} genres={genres} rateMovie={rateMovie}/>
-    //           ))
-    //         ) : (
-    //           <Alert
-    //             message="I'm sorry :( No results found. Try entering the movie name again."
-    //             type="info"
-    //           />
-    //         )} */}
-    //         {currentFilteredPosts && currentFilteredPosts.length > 0 ? (
-    //           currentFilteredPosts.map((movie) => (
-    //             <CardMovie
-    //               key={movie.id}
-    //               movie={movie}
-    //               genres={genres}
-    //               rateMovie={rateMovie}
-    //             />
-    //           ))
-    //         ) : (
-    //           <Alert
-    //             message="I'm sorry :( No results found. Try entering the movie name again."
-    //             type="info"
-    //           />
-    //         )}
-    //       </div>
-    //     </>
-    //   )}
-    // </>
     
-      <>
-        {loading ? (
-          <Flex justify="center" align="center" style={{ minHeight: '100vh' }}>
-            <Spin size="large" />
-          </Flex>
-        ) : (
-          <>
+    <>
+      {loading ? (
+        <Flex justify="center" align="center" style={{ minHeight: '100vh' }}>
+          <Spin size="large" />
+        </Flex>
+      ) : (
+        <>
+           {activeTabKey === 'tab1' && ( 
             <div className="search-bar">
               <input
                 className="search-bar-input"
@@ -90,40 +43,39 @@ export default function MoviesList({
                 onChange={onInputChange}
               />
             </div>
-            <div className="movies-list">
-              {currentFilteredPosts && currentFilteredPosts.length > 0 ? (
-                currentFilteredPosts.map((movie) => (
+          )}
+          <div className="movies-list">
+            {currentFilteredPosts && currentFilteredPosts.length > 0 ? (
+              currentFilteredPosts.map((movie) => (
+                <CardMovie
+                  key={movie.id}
+                  movie={movie}
+                  genres={genres}
+                  rateMovie={rateMovie}
+                  setMovies={setMovies}
+                  setRatedMovies={setRatedMovies}
+                />
+              ))
+            ) : activeTabKey === 'tab1' &&(
+              <Alert message="I'm sorry :( No results found." type="info" />
+            )}
+          </div>
+          {console.log(ratedMovies)}
+          <div className="movies-list">
+            {ratedMovies && ratedMovies.length > 0
+              ? ratedMovies.map((movie) => (
                   <CardMovie
                     key={movie.id}
                     movie={movie}
                     genres={genres}
                     rateMovie={rateMovie}
-                    setMovies={setMovies}
+                    setRatedMovies={setRatedMovies}
                   />
                 ))
-              ) : (
-                          <Alert
-                            message="I'm sorry :( No results found. Try entering the movie name again."
-                            type="info"
-                          />
-                        )}
-            </div>
-            {console.log(ratedMovies)}
-            <div className="movies-list">
-              {ratedMovies && ratedMovies.length > 0 ? (
-                ratedMovies.map((movie) => (
-                  <CardMovie
-                    key={movie.id}
-                    movie={movie}
-                    genres={genres}
-                    rateMovie={rateMovie}
-                  />
-                ))
-              ) : null}
-            </div>
-          </>
-        )}
-      </>
-    
+              : null}
+          </div>
+        </>
+      )}
+    </>
   );
 }
