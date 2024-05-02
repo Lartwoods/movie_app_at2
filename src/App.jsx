@@ -21,7 +21,7 @@ function App() {
   const [genres, setGenres] = useState([]);
   const [movieRatings, setMovieRatings] = useState({});
   const [rateMovies, setRatedMovies] = useState([]);
-
+  console.log(movies);
   const fetchMovies = useCallback(async () => {
     try {
       if (!navigator.onLine) {
@@ -38,7 +38,9 @@ function App() {
       setLoading(false);
     }
   }, []);
-
+  useEffect(() => {
+    fetchMovies();
+  }, []);
   useEffect(() => {
     const delayedFetchMovies = debounce(() => {
       fetchMovies();
@@ -61,19 +63,19 @@ function App() {
     initializeGuestSession();
   }, []);
 
-  useEffect(() => {
-    const loadRatedMovies = async () => {
-      try {
-        const movieService = new MovieService();
-        const ratedMoviesData = await movieService.getRatedMovies();
-        setRatedMovies(ratedMoviesData.results);
-      } catch (error) {
-        console.error('Error loading rated movies:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const loadRatedMovies = async () => {
+  //     try {
+  //       const movieService = new MovieService();
+  //       const ratedMoviesData = await movieService.getRatedMovies();
+  //       setRatedMovies(ratedMoviesData.results);
+  //     } catch (error) {
+  //       console.error('Error loading rated movies:', error);
+  //     }
+  //   };
 
-    loadRatedMovies();
-  }, []);
+  //   loadRatedMovies();
+  // }, []);
 
   const rateMovie = async (movieId, rating) => {
     try {
@@ -152,6 +154,7 @@ function App() {
                 currentFilteredPosts={currentFilteredPosts}
                 genres={genres}
                 rateMovie={rateMovie}
+                setMovies={setMovies}
                 ratedMovies={rateMovies}
               />
               <Pagination
@@ -175,7 +178,7 @@ function App() {
       label: `Rated`,
       children: (
         <>
-          <MoviesList movies={rateMovies} rateMovie={rateMovie} />
+          <MoviesList movies={rateMovies} />
         </>
       ),
     },

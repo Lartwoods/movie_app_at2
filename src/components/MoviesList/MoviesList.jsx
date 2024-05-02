@@ -12,6 +12,7 @@ export default function MoviesList({
   rateMovie,
   ratedMovies,
   genres,
+  setMovies
 }) {
   
   const inputRef = useRef(null);
@@ -97,6 +98,7 @@ export default function MoviesList({
                     movie={movie}
                     genres={genres}
                     rateMovie={rateMovie}
+                    setMovies={setMovies}
                   />
                 ))
               ) : (
@@ -106,7 +108,7 @@ export default function MoviesList({
                           />
                         )}
             </div>
-           
+            {console.log(ratedMovies)}
             <div className="movies-list">
               {ratedMovies && ratedMovies.length > 0 ? (
                 ratedMovies.map((movie) => (

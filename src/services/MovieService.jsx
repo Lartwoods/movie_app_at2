@@ -12,6 +12,7 @@ export default class MovieService {
   apiKey = 'a1987ae41cd713a7e76e9c209d795a21';
 
   async getResource(url) {
+    console.log(`${this.apiBase}${url}`);
     try {
       const res = await fetch(`${this.apiBase}${url}`, options);
 
@@ -26,8 +27,11 @@ export default class MovieService {
   }
 
   async getAllMovies(page = 1) {
+    'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
     try {
-      const response = await this.getResource(`/discover/movie?page=${page}`);
+      const response = await this.getResource(
+        `/discover/movie?api_key=${this.apiKey}&page=${page}`
+      );
       return response.results;
     } catch (error) {
       console.error('Error loading data:', error);
@@ -77,7 +81,7 @@ export default class MovieService {
   async getRatedMovies(page = 1) {
     const token = localStorage.getItem('token');
     const data = await fetch(
-      `${this.apiBase}/guest_session/${token}/rated/movies?api_key=${this.apiKey}&page=${page}`
+      `${this.apiBase}/guest_session/${token}/rated/movies?api_key=${this.apiKey}`
     );
     return data.json();
   }
@@ -89,4 +93,11 @@ export default class MovieService {
   setSessionToken(token) {
     localStorage.setItem('token', token);
   }
+  // setMyRating (id, value) {
+  //   localStorage.setItem(id, value);
+  // };
+
+  // getMyRating (id)  {
+  //   return +localStorage.getItem(id);
+  // };
 }

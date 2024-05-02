@@ -16,7 +16,7 @@ function shortenText(text, maxLength) {
   }
 }
 
-export default function CardMovie({ movie, genres, rateMovie }) {
+export default function CardMovie({ movie, genres, rateMovie, setMovies }) {
   const { poster_path, original_title, release_date, genre_ids, overview } =
     movie;
 
@@ -47,8 +47,22 @@ export default function CardMovie({ movie, genres, rateMovie }) {
   const [rating, setRating] = useState(0);
 
   const handleRateChange = (value) => {
-  
-    rateMovie(movie.id, value);
+
+    setMovies((prevMovies) => {
+      return prevMovies.map((movie) => {
+        if (!movie || !movie.id) {
+    return null; 
+  }
+        if (movie.id === movie.id) {
+          setRating({ ...movie, me_average: value })
+          return { ...movie, me_average: value };
+        }
+        return movie;
+      })
+    })
+
+    
+    // rateMovie(movie.id, value);
     
     setRating(value);
   };
